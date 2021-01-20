@@ -10,24 +10,40 @@
   </head>
 
   <body>
-    <% if user_signed_in? %>
-      <li>
-        <%= link_to '投稿フォーム', new_post_image_path %>
-      </li>
-      <li>
-        <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
-      </li>
-      <li>
-      <%= link_to 'マイページ', user_path(current_user.id) %>
-      </li>
-    <% else %>
-      <li>
-        <%= link_to "新規登録", new_user_registration_path %>
-      </li>
-      <li>
-        <%= link_to "ログイン", new_user_session_path %>
-      </li>
-    <% end %>
-    <%= yield %>
+    <header class="navbar navbar-fixed-top navbar-inverse" >
+      <div class="container">
+        <nav class="nav navbar-nav navbar-left"><span>Bookers</span></nav>
+        <nav id="slidemenu">
+          <ul class="nav navbar-nav navbar-right" data-hover="dropdown" data-animations="zoomIn fadeIn fadeInUp fadeIn">
+    
+          <% if user_signed_in? %>
+            <li><%= link_to 'Home', user_path(current_user.id), class: "glyphicon glyphicon-home home" %></li>
+            <li><%= link_to 'User',user_path, class: "glyphicon glyphicon-user"  %></li>
+            <li><%= link_to 'Books',books_path, class: "glyphicon glyphicon-book" %></li>
+            <li><%= link_to "logout", destroy_user_session_path, method: :delete, class: "glyphicon glyphicon-log-out" %></li>
+          <% else %>
+            <li><%= link_to 'Home', root_path, class: "glyphicon glyphicon-home home" %></li>
+            <li><%= link_to 'About', home_about_path, class: "glyphicon glyphicon-link about" %></li>
+            <li><%= link_to "Sign up", new_user_registration_path, class: "glyphicon glyphicon-link about" %></li>
+            <li><%= link_to "login", new_user_session_path, class: "glyphicon glyphicon-log-in sign_in"  %></li>
+          <% end %>
+          
+          </ul>
+        </nav>
+      </div>
+    </header>
   </body>
+  
+  <%= yield %>
+  
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-3 col-xs-offset-9" >
+          <p>CopyRight Infratop.inc</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
 </html>
