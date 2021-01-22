@@ -1,7 +1,7 @@
 class BooksController < ApplicationController
 
   def create
-    @books = Book.all
+    @book = Book.new(book_params)
     @book.user_id = current_user.id
     if @book.save
       flash[:notice] = 'You have creatad book successfully.'
@@ -9,10 +9,11 @@ class BooksController < ApplicationController
     else
       @user = User.find(current_user.id)
       @users = User.all
+      @books = Book.all
       render :index
     end
   end
-  
+
   def index
     @book = Book.new
     @books = Book.all
@@ -24,7 +25,7 @@ class BooksController < ApplicationController
     @new_book = Book.new
     @user = User.find(@book.user_id)
   end
-  
+
   def destroy
     @book = Book.find(params[:id])
     @book.destroy
