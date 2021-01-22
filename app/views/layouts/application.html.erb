@@ -4,7 +4,7 @@
     <title>Bookers2</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+    
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
@@ -37,9 +37,16 @@
         </div>
       </nav>
     </header>
+    <div>
+      <% if notice %>
+      <p class="text-success"><%= notice %></p>
+　    <% end %>
+　    <% if alert%>
+      <p class="text-danger"><%= alert %></p>
+      <% end %>
+      <%= yield %>
+    </div>
   </body>
-
-  <%= yield %>
 
   <footer>
     <div class="container mt-5">

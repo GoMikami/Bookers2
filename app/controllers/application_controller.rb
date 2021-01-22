@@ -5,13 +5,14 @@ class ApplicationController < ActionController::Base
 
   def after_sign_in_path_for(resource)
     flash[:notice] = "signed in successfully."
-    user_path(current_user)
+    user_path(current_user.id)
   end
 
   protected
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :email])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:name])  
   end
 
 end

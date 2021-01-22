@@ -1,33 +1,32 @@
 class UsersController < ApplicationController
 
-  before_action :authenticate_user!
-  
-  def index
-    @book = Book.new
-    @users = User.all
-  end
-
   def show
     @user = User.find(params[:id])
+    @books = @user.books.all
     @book = Book.new
-    @users = @user.books
   end
 
   def edit
-    @user = current_user
-    if @user == current_user
-      render :edit
-    else
-      redirect_to user_path(current_user)
+    @user = User.find(params[:id])
+    if @user != current_user.id
+      redirect_to user_path(current_user.id)
     end
   end
 
   def update
-    @user = current_user
+    @user = User.find(params[:id])
     if @user.update(user_params)
       flash[:notice] = 'You have updated user successfully.'
       redirect_to user_path(@user.id)
+    else
+      render :edit
     end
+  end
+
+  def index
+    @user = User.find(current_user.id)
+    @users = User.all
+    @book = Book.new
   end
 
   private
