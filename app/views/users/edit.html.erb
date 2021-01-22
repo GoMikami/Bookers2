@@ -1,29 +1,35 @@
-<body>
-  <p id="notice"></p>
-  
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-12 col-md-8 col-lg-5 px-5 px-sm-0 mx-auto">
-        <h2>User info</h2>
-        <%= form_for(@user) do |f| %>
-        <div class="form-group">
-          <tr>Name</tr>
-          <tr><%= f.text_field :name %></tr>
-        </div>
-        <div class="form-group">
-          <tr>Image</tr>
-          <tr><%= f.attachment_field :profile_image, placeholder: "プロフィール画像" %></tr>
-        </div>
-        <div class="form-group">
-          <tr>Introduction</tr>
-          <tr><%= f.text_area :introduction %></tr>
-        </div>
-        <div class="form-group">
-          <%= f.submit "Update User", class: "btn btn-secondary" %>
-        </div>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 col-md-8 col-lg-5 px-5 px-sm-0 mx-auto">
+      <h2>User info</h2>
+      <div class="text-danger mb-3">
+        <% if @user.errors.any? %>
+        <h2><%= @user.errors.count %>error prohibited this obj from being saved:</h2>
+        <ul>
+          <% @user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+          <% end %>
+        </ul>
+        <% end %>
+      </div>
+      
+      <%= form_for(@user) do |f| %>
+      <div class="form-group">
+        <tr>Name</tr>
+        <tr><%= f.text_field :name, class: "form-control" %></tr>
+      </div>
+      <div class="form-group">
+        <tr>Image</tr>
+        <tr><%= f.attachment_field :profile_image, class: "form-control-file user_image" %></tr>
+      </div>
+      <div class="form-group">
+        <tr>Introduction</tr>
+        <tr><%= f.text_area :introduction, class: "form-control introduction" %></tr>
+      </div>
+      <div class="form-group">
+        <%= f.submit "Update User", class: "btn btn-secondary" %>
         <% end %>
       </div>
     </div>
   </div>
-  
-</body>
+</div>

@@ -1,74 +1,50 @@
-<body>
-		<p id="notice"></p>
-	
-		<div class="container px-5 px-sm-0">
-			<div class="row">
-				<div class="col-md-3">
-		  	<h2>User info</h2>
-		  	<%= attachment_image_tag @user, :profile_image, :fill, 100, 100, format: 'jpeg', fallback: "no_image.jpg" %>
-		  	<table class="table">
-		  		<tbody>
-		      <tr></tr>
-		      <tr>
-						<th>name</th>
-						<th><%= @user.name %></th>
-					</tr>
-					<tr>
-					  <th>intoroduction</th>
-					  <th><%= @user.introduction %></th>
-					</tr>
-					</tbody>
-				</table>
-				
-				<div class="row" >
-			  <% if @user.id == current_user.id %>
-			  <p><%= link_to "", edit_user_path(@user), class: "btn btn-outline-secondary btn-block fas fa-user-cog" %></p>
-				<% else %>
-				<p><%= link_to "", user_path(@user), class: "btn btn-outline-secondary btn-block fas fa-user-cog" %></p>
-				<% end %>
-				</div>
-			
-			<h2>New book</h2>
-			<%= form_for(@book) do |f| %>
-			<div class="form-group">
-			  <label for="book title">Title</label>
-			  <%= f.text_field :title, class: "col-xs-12 book_title" %>
-			</div>
-			<div class="form-group">
-			  <label for="book opinion">Opinion</label>
-			  <%= f.text_area :body, class: "col-xs-12 book_body" %>
-			</div>
-			<div class="form-group">
-			  <%= f.submit :"Create Book", class: "btn btn-primary col-xs-12" %>
-			</div>
-			<% end %>
-		</div>
-		
-		<div class="col-md-8 offset-md-1" >
-		<h2>Books</h2>
+<div class="container px-5 px-sm-0">
+  <div class="row">
+    <div class="col-md-3">
+      <h2>User info</h2>
+      <%= attachment_image_tag @user, :profile_image, size: "100x100", format: "jpeg", fallback: "no_image.jpg" %>
+      <table class="table">
+        <tbody>
+          <tr>
+            <th>name</th>
+            <th><%= @user.name %></th>
+          </tr>
+          <tr>
+            <th>introduction</th>
+            <th><%= @user.introduction %></th>
+          </tr>
+        </tbody>
+      </table>
+      <div class="row">
+        <a class="btn btn-outline-secondary btn-block btn-sm" href="/users/<%= @user.id %>/edit">
+          <i class="fas fa-user-cog"></i>
+        </a>
+      </div>
+    <%= render "books/form", book: @book %>
+
+<div class="col-md-8 offset-md-1">
+	<h2>Books</h2>
 		<table class="table table-hover table-inverse">
 			<thead>
 				<tr>
 					<th></th>
 			    <th>Title</th>
 			    <th>Opinion</th>
-			    <th colspan="3"></th>
 				</tr>
 			</thead>
-			<% @users.each do |user| %>
+			<% @books.each do |book| %>
 			<tbody>
 				<tr>
-					<th><%= link_to user_path(@user) do %>
+					<th><%= link_to user_path(@user.id) do %>
 					<%= attachment_image_tag @user, :profile_image, :fill, 100, 100, format: 'jpeg', fallback: "no_image.jpg" %>
 					<% end %>
 					</th>
-					<th><%= link_to users.title, book_path(users.id) %></th>
-					<th><%= users.body %></th>
+					<th><%= link_to book.title, book_path(books.id) %></th>
+					<th><%= book.body %></th>
 				</tr>
 			</tbody>
 			<% end %>
 		</table>
 		</div>
   </div>
-<%= yield %>
 </body>
